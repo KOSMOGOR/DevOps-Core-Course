@@ -40,7 +40,7 @@ def get_time_info():
         "uptime_seconds": delta.seconds,
         "uptime_human": f"{delta.seconds // 3600} hour, {delta.seconds % 3600 // 60} minutes",
         "current_time": datetime.now(timezone.utc).isoformat(),
-        "timezone": now.astimezone().tzinfo.tzname(now)
+        "timezone": "UTC"
     }
 
 
