@@ -24,6 +24,28 @@ You can create `.env` file storing all enviroment values. To run application sim
 python app.py
 ```
 
+## Docker
+
+You can also build, pull, and run this app using Docker.
+
+To build simply run:
+
+```bash
+docker build -t devops .
+```
+
+To pull simply run:
+
+```bash
+docker pull docker.io/kosmogor/devops
+```
+
+To run simply run:
+
+```bash
+docker run devops:latest
+```
+
 ## API Endpoints
 
 - `GET /` - Service and system information
