@@ -72,7 +72,7 @@ async fn app_root(req: HttpRequest) -> impl Responder {
             platform_version: os_info_got.version().to_string(),
             architecture: os_info_got.architecture().unwrap().to_string(),
             cpu_count: thread::available_parallelism().unwrap().get(),
-            rust_version: version_check::Version::read().unwrap().to_string()
+            rust_version: env::var("RUST_VERSION").unwrap_or("Unknown".to_string())
         },
         runtime: RuntimeInfo {
             uptime_seconds: time_delta.num_seconds(),
@@ -118,7 +118,7 @@ static STARTING_TIME: Mutex<DateTime<Utc>> = Mutex::new(DateTime::from_timestamp
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     // loading and setting env variables
-    dotenv::dotenv().ok();
+    dotenvy::dotenv().unwrap();
     let debug = env::var("DEBUG").is_ok();
     unsafe {
         std::env::set_var("RUST_LOG", if debug { "debug" } else { "info" });
