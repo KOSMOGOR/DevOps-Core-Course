@@ -3,18 +3,16 @@ name: lab03
 on: push
 
 jobs:
-  Check_code_and_docker_push:
+  Check-code-and-docker-push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: '3.14'
-      - name: Change dir
-        run: cd app_python/
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: cd app_python/; pip install -r requirements.txt
       - name: Lint
-        run: flake8 app.py tests/
+        run: flake8 app_python/app.py app_python/tests/
       - name: Test
-        run: pytest tests/
+        run: pytest app_python/tests/
