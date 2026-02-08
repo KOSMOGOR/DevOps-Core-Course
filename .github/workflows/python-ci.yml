@@ -3,7 +3,7 @@ name: lab03
 on: push
 
 jobs:
-  build:
+  Check_code_and_docker_push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
