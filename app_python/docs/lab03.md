@@ -76,6 +76,6 @@ I used practices like:
 
 ### Snyk Integration Results
 
---
+Snyk found vulnarability in package `python-multipart` and suggested upgrading it, and I have done it.
 
 ### Workflow Performance

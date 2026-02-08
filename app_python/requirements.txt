@@ -33,10 +33,10 @@ pyflakes==3.4.0
 Pygments==2.19.2
 pytest==9.0.2
 python-dotenv==1.2.1
-python-multipart==0.0.21
+python-multipart==0.0.22
 PyYAML==6.0.3
 rich==14.3.0
-rich-toolkit==0.17.1
+rich-toolkit==0.18.1
 rignore==0.7.6
 sentry-sdk==2.50.0
 shellingham==1.5.4
