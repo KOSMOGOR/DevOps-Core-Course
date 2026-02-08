@@ -46,6 +46,14 @@ To run simply run:
 docker run devops:latest
 ```
 
+## Testing
+
+App can be easily tested after installation by simply running:
+
+```bash
+pytest /tests
+```
+
 ## API Endpoints
 
 - `GET /` - Service and system information
