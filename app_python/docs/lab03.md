@@ -1,6 +1,8 @@
 # Lab 03
 
-## Choosing Test Framework
+## Testing
+
+### Choosing Test Framework
 
 I chose pytest as test framework for some reasons:
 
@@ -9,7 +11,7 @@ I chose pytest as test framework for some reasons:
 - It supports powerfull fixtures
 - It has rich plugin architecture
 
-## Tests Structure
+### Tests Structure
 
 File `test_endpoints.py` consists of 3 test functions:
 
@@ -17,7 +19,7 @@ File `test_endpoints.py` consists of 3 test functions:
 - `test_health()` verifies status code, structure and fields of request to `/health`
 - `test_404()` verifies status code of request to not existing path
 
-## Tests Terminal Output
+### Tests Terminal Output
 
 ```bash
 $ pytest tests/
@@ -31,3 +33,49 @@ tests\test_endpoints.py ...                                      [100%]
 
 ========================== 3 passed in 0.54s ==========================
 ```
+
+## Actions Workflow
+
+### Workflow Trigger Strategy
+
+Workflow triggers on opening (or reopening) pull requests to master, since we need to check code before merging.
+
+### Action Choice
+
+I chose official GitHub and Docker actions, since they are trustworthy.
+
+### Docker Tagging Strategy
+
+Fro tagging I have used current date, since it is enough for version tracking.
+
+### Proofs
+
+Link to successful workflow: <https://github.com/KOSMOGOR/DevOps-Core-Course/actions/runs/21801589090>
+
+Screenshot:
+
+![Workflow](./screenshots/lab03/successful-actions-workflow.png)
+
+## Continious Integration
+
+### Successful working badge:
+
+![badge](/docs/screenshots/lab03/successful-actions-badge.png)
+
+### Caching Implemantation
+
+Caching was implemented using `cache: pip`
+
+### Best Practices
+
+I used practices like:
+
+- Optimize pipeline stages - I optimized pipeline stages
+- Use failures to improve processes - tasks can fail due to not compliting some requirements
+- Use secrets - I used GitHub secrets for tokens in workflow
+
+### Snyk Integration Results
+
+--
+
+### Workflow Performance

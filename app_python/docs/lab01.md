@@ -23,13 +23,13 @@ API documentation can be found on `http://[HOST]:[PORT]/docs` (defaults to <http
 ## Testing Evidence
 
 `/` endpoint:
-![/](./screenshots/01-main-endpoint.png)
+![/](./screenshots/lab01/01-main-endpoint.png)
 
 `/health` endpoint:
-![/health](./screenshots/02-health-check.png)
+![/health](./screenshots/lab01/02-health-check.png)
 
 some terminal output:
-![output](./screenshots/03-formatted-output.png)
+![output](./screenshots/lab01/03-formatted-output.png)
 
 ## Challenges & Solutions
 
