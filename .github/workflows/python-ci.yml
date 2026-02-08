@@ -12,15 +12,7 @@ jobs:
           python-version: '3.14'
       - name: Install dependencies
         run: cd app_python/; pip install -r requirements.txt
-  lint:
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      - name: Run flake8
+      - name: Lint
         run: flake8 app.py tests/
-  test:
-    runs-on: ubuntu-latest
-    needs: [ build, lint ]
-    steps:
-      - name: Run pytest
+      - name: Test
         run: pytest tests/
