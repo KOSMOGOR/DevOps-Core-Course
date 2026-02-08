@@ -58,7 +58,7 @@ Screenshot:
 
 ## Continious Integration
 
-### Successful working badge:
+### Successful working badge
 
 ![badge](/docs/screenshots/lab03/successful-actions-badge.png)
 

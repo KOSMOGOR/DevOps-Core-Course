@@ -29,6 +29,8 @@ jobs:
         uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --source-dir=python_app/
 
       - name: Generate version
         id: gen-ver
