@@ -30,7 +30,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: python_app/ --file=app_python/requirements.txt
+          args: app_python/
 
       - name: Generate version
         id: gen-ver
