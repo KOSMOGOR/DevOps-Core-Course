@@ -1,14 +1,14 @@
 name: python-lab03
 
 on:
-  pull_request:
-    types: [opened, reopened]
-    branches:
-      - master
-    paths:
-      - app_python/
-      - '!app_python/docs/**'
-      - '!app_python/README.md'
+  # pull_request:
+  #   types: [opened, reopened]
+  #   branches:
+  #     - master
+  #   paths:
+  #     - app_python/
+  #     - '!app_python/docs/**'
+  #     - '!app_python/README.md'
   workflow_dispatch:
 
 jobs:
