@@ -82,7 +82,7 @@ async fn app_root(req: HttpRequest) -> impl Responder {
         },
         request: RequestInfo {
             client_ip: req.connection_info().host().to_string(),
-            user_agent: req.headers().get("user-agent").unwrap().to_str().unwrap().to_string(),
+            user_agent: req.headers().get("user-agent").map(|h| h.to_str().unwrap()).unwrap_or("None").to_string(),
             method: req.method().to_string(),
             path: req.path().to_string()
         },
@@ -146,4 +146,31 @@ async fn main() -> std::io::Result<()> {
     .bind((host, port))?
     .run()
     .await
+}
+
+#[cfg(test)]
+mod tests {
+    use actix_web::{http::header::ContentType, test, App};
+
+    use super::*;
+
+    #[actix_web::test]
+    async fn test_root_get() {
+        let app = test::init_service(App::new().service(app_root)).await;
+        let req = test::TestRequest::default()
+            .insert_header(ContentType::plaintext())
+            .to_request();
+        let resp = test::call_service(&app, req).await;
+        assert!(resp.status().is_success());
+    }
+
+    #[actix_web::test]
+    async fn test_health_get() {
+        let app = test::init_service(App::new().service(app_health)).await;
+        let req = test::TestRequest::with_uri("/health")
+            .insert_header(ContentType::plaintext())
+            .to_request();
+        let resp = test::call_service(&app, req).await;
+        assert!(resp.status().is_success());
+    }
 }
