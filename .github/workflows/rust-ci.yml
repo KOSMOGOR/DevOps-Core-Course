@@ -7,9 +7,8 @@ on:
       - master
     paths:
       - app_rust/
-    paths-ignore:
-      - app_rust/docs/**
-      - app_rust/README.md
+      - '!app_rust/docs/**'
+      - '!app_rust/README.md'
 
 jobs:
   Check-rust-code-and-docker-push:

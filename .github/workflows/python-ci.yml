@@ -7,9 +7,8 @@ on:
       - master
     paths:
       - app_python/
-    paths-ignore:
-      - app_python/docs/**
-      - app_python/README.md
+      - '!app_python/docs/**'
+      - '!app_python/README.md'
 
 jobs:
   Check-code-and-docker-push:
