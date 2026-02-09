@@ -1,15 +1,14 @@
 name: rust-lab03
 
 on:
-  # pull_request:
-  #   types: [opened, reopened]
-  #   branches:
-  #     - master
-  #   paths:
-  #     - app_rust/
-  #     - '!app_rust/docs/**'
-  #     - '!app_rust/README.md'
-  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - master
+    # paths:
+    #   - app_rust/
+    #   - '!app_rust/docs/**'
+    #   - '!app_rust/README.md'
 
 jobs:
   Check-rust-code-and-docker-push:
