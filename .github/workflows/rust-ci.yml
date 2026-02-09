@@ -5,10 +5,10 @@ on:
     types: [opened, reopened]
     branches:
       - master
-    # paths:
-    #   - app_rust/
-    #   - '!app_rust/docs/**'
-    #   - '!app_rust/README.md'
+    paths:
+      - app_rust/
+      - '!app_rust/docs/**'
+      - '!app_rust/README.md'
 
 jobs:
   Check-rust-code-and-docker-push:

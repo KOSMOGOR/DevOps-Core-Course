@@ -15,3 +15,9 @@ Rust workflow uses:
 Both workflows checks their directory (`app_pytho/` or `app_rust/`) and exludes changes made to `docs/**` or `README.md`
 
 This makes workflow better, since it won't trigger pointlessly, if not important file to workflow will be changed.
+
+## Proofs
+
+Both workflows run independently:
+
+![workflows](./screenshots/lab03/workflows.png)

@@ -5,10 +5,10 @@ on:
     types: [opened, reopened]
     branches:
       - master
-  #   paths:
-  #     - app_python/
-  #     - '!app_python/docs/**'
-  #     - '!app_python/README.md'
+    paths:
+      - app_python/
+      - '!app_python/docs/**'
+      - '!app_python/README.md'
 
 jobs:
   Check-code-and-docker-push:
