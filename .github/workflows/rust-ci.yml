@@ -9,6 +9,7 @@ on:
       - app_rust/
       - '!app_rust/docs/**'
       - '!app_rust/README.md'
+  workflow_dispatch:
 
 jobs:
   Check-rust-code-and-docker-push:

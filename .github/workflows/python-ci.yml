@@ -9,6 +9,7 @@ on:
       - app_python/
       - '!app_python/docs/**'
       - '!app_python/README.md'
+  workflow_dispatch:
 
 jobs:
   Check-code-and-docker-push:
