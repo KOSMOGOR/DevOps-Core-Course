@@ -1,0 +1,36 @@
+name: terraform-lab04
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - master
+    paths:
+      - "terraform/**"
+      - '.github/workflows/terraform-ci.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.14.5'
+
+      - name: Terraform fmt
+        run: cd terraform; terraform fmt -check
+
+      - name: Terraform init
+        run: cd terraform; terraform init
+
+      - name: Terraform validate
+        run: cd terraform; terraform validate
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v3
+
+      - name: TFLint
+        run: cd terraform; tflint --init; tflint --format=default
