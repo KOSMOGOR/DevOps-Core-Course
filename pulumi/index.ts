@@ -1,7 +1,7 @@
 import * as yandex from "@pulumi/yandex"; 
 import secrets from "./secrets.json";
 import { readFileSync } from "fs";
-const sshKey = readFileSync("C:\\Users\\Kosmo\\.ssh\\id_ed25519.pub", "utf-8").trim();
+const sshKey = readFileSync("~/.ssh/id_ed25519.pub", "utf-8").trim();
 
 // const provider = new yandex.Provider("provider", {
 //     zone: "ru-central1-a",
