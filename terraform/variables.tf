@@ -9,3 +9,7 @@ variable "ya_cloud_id" {
 variable "ya_folder_id" {
   type = string
 }
+
+variable "sshPath" {
+  type = string
+}
