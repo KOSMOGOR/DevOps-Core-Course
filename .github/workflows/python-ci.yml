@@ -1,0 +1,56 @@
+name: python-lab03
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - master
+    paths:
+      - app_python/
+      - '!app_python/docs/**'
+      - '!app_python/README.md'
+
+jobs:
+  Check-code-and-docker-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.14'
+          cache: pip
+
+      - name: Install dependencies
+        run: cd app_python/; pip install -r requirements.txt
+
+      - name: Lint
+        run: flake8 app_python/app.py app_python/tests/
+
+      - name: Test
+        run: pytest app_python/tests/
+
+      # snyk can't find required packages, even after installing dependencies, don't know the reason
+      # - name: Check for vulnerabilities
+      #   uses: snyk/actions/python@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     args: app_python/
+
+      - name: Generate version
+        id: gen-ver
+        run: echo "VERSION=$(date +%Y.%m.%d)" >> $GITHUB_OUTPUT
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/setup-buildx-action@v3
+      - name: Docker build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./app_python
+          push: true
+          tags: kosmogor/devops:latest,kosmogor/devops:${{ steps.gen-ver.outputs.VERSION }}

@@ -1,5 +1,9 @@
 # Python Web Server
 
+[![lab03](https://github.com/KOSMOGOR/DevOps-Core-Course/actions/workflows/python-ci.yml/badge.svg)](https://github.com/KOSMOGOR/DevOps-Core-Course/actions/workflows/python-ci.yml)
+
+---
+
 ## Overview
 
 This is a web application providing detailed information about itself and its runtime environment
@@ -44,6 +48,14 @@ To run simply run:
 
 ```bash
 docker run devops:latest
+```
+
+## Testing
+
+App can be easily tested after installation by simply running:
+
+```bash
+pytest /tests
 ```
 
 ## API Endpoints

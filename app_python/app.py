@@ -38,7 +38,8 @@ def get_time_info():
     delta = now - start_time
     return {
         "uptime_seconds": delta.seconds,
-        "uptime_human": f"{delta.seconds // 3600} hour, {delta.seconds % 3600 // 60} minutes",
+        "uptime_human": f"{delta.seconds // 3600} hour,\
+{delta.seconds % 3600 // 60} minutes",
         "current_time": datetime.now(timezone.utc).isoformat(),
         "timezone": "UTC"
     }
@@ -77,7 +78,8 @@ def app_root(request: Request):
             "path": request.url.path
         },
         "endpoints": [
-            {"path": "/", "method": "GET", "description": "Service information"},
+            {"path": "/", "method": "GET",
+             "description": "Service information"},
             {"path": "/health", "method": "GET", "description": "Health check"}
         ]
     }
@@ -106,7 +108,7 @@ def not_found(request: Request, exception: Exception):
 
 
 @app.exception_handler(500)
-def not_found(request: Request, exception: Exception):
+def internal_server_error(request: Request, exception: Exception):
     return JSONResponse(
         {
             "error": "Internal Server Error",
@@ -117,5 +119,5 @@ def not_found(request: Request, exception: Exception):
 
 
 if __name__ == "__main__":
-    logger.info('Application starting...')
+    logger.info("Application starting...")
     uvicorn.run("app:app", host=HOST, port=PORT, reload=DEBUG)

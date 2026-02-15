@@ -1,4 +1,4 @@
-# Lab 01 Bonus Task
+# Lab 02 Bonus Task
 
 ## Multi-Stage Build Strategy
 
