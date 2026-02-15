@@ -1,10 +1,7 @@
 name: terraform-lab04
 
 on:
-  pull_request:
-    types: [opened, reopened]
-    branches:
-      - master
+  push:
     paths:
       - "terraform/**"
       - '.github/workflows/terraform-ci.yml'
