@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "yandex" {
-  zone = "ru-central1-a"
+  zone      = "ru-central1-a"
   token     = var.ya_token
   cloud_id  = var.ya_cloud_id
   folder_id = var.ya_folder_id
@@ -22,12 +22,12 @@ resource "yandex_compute_disk" "boot-disk-1" {
 }
 
 resource "yandex_compute_instance" "vm-1" {
-  name = "devops"
+  name        = "devops"
   platform_id = "standard-v2"
 
   resources {
-    cores  = 2
-    memory = 2
+    cores         = 2
+    memory        = 2
     core_fraction = 20
   }
 
@@ -58,27 +58,27 @@ resource "yandex_vpc_subnet" "subnet-1" {
 
 resource "yandex_vpc_security_group" "vm-group-1" {
   network_id  = yandex_vpc_network.network-1.id
-  name = "vm-group-1"
+  name        = "vm-group-1"
   description = "port rules"
 
   ingress {
-    description = "SSH"
-    protocol = "TCP"
+    description    = "SSH"
+    protocol       = "TCP"
     v4_cidr_blocks = ["0.0.0.0/0"]
-    port = 22
+    port           = 22
   }
 
   ingress {
-    description = "Web"
-    protocol = "TCP"
+    description    = "Web"
+    protocol       = "TCP"
     v4_cidr_blocks = ["0.0.0.0/0"]
-    port = 80
+    port           = 80
   }
 
   ingress {
-    description = "Future"
-    protocol = "TCP"
+    description    = "Future"
+    protocol       = "TCP"
     v4_cidr_blocks = ["0.0.0.0/0"]
-    port = 5000
+    port           = 5000
   }
 }
