@@ -28,7 +28,7 @@
     ports:
       - "{{ app_port }}:{{ app_port }}"
     env: "{{ app_environment_vars | default({}) }}"
-  notify: restart application
+  notify: restart app
 
 - name: Wait for application port to be available
   wait_for:

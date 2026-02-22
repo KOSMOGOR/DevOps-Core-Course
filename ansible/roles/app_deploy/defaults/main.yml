@@ -1,6 +1,5 @@
 ---
 app_restart_policy: unless-stopped
-app_workdir: /opt/devops-app
 app_healthcheck_path: /health
 app_environment:
   APP_NAME: "{{ app_name }}"

@@ -16,7 +16,6 @@
     state: directory
     mode: '0755'
 
-
 - name: Add Docker GPG key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
