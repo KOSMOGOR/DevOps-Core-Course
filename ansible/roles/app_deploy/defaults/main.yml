@@ -1,0 +1,6 @@
+---
+app_restart_policy: unless-stopped
+app_healthcheck_path: /health
+app_environment:
+  APP_NAME: "{{ app_name }}"
+  PORT: "{{ app_port }}"
