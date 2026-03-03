@@ -1,6 +1,6 @@
 services:
   {{ web_app_name }}:
-    image: {{ web_app_image }}:{{ web_app_tag }}
+    image: {{ web_app_docker_image }}:{{ web_app_docker_tag }}
     container_name: {{ web_app_name }}
     ports:
       - "{{ web_app_port }}:{{ web_app_port }}"

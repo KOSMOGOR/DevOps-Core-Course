@@ -5,7 +5,7 @@
     - docker_install
   block:
     - name: Install Docker prerequisites
-      apt:
+      ansible.builtin.apt:
         name:
           - ca-certificates
           - curl
@@ -16,19 +16,19 @@
         cache_valid_time: 3600
 
     - name: Create directory for Docker GPG key
-      file:
+      ansible.builtin.file:
         path: /etc/apt/keyrings
         state: directory
         mode: '0755'
 
     - name: Add Docker GPG key
-      apt_key:
+      ansible.builtin.apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         keyring: /etc/apt/keyrings/docker.gpg
         state: present
 
     - name: Add Docker apt repository
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: "{{ docker_repo }}"
         filename: docker
         state: present
@@ -36,29 +36,29 @@
       notify: restart docker
 
     - name: Install Docker packages
-      apt:
+      ansible.builtin.apt:
         name: "{{ docker_packages }}"
         state: present
       notify: restart docker
 
     - name: Ensure Docker service is enabled and running
-      service:
+      ansible.builtin.service:
         name: docker
         state: started
         enabled: true
 
   rescue:
     - name: Wait before retrying
-      pause:
+      ansible.builtin.pause:
         seconds: 10
 
     - name: Retry apt update
-      apt:
+      ansible.builtin.apt:
         update_cache: true
 
   always:
     - name: Ensure Docker service is enabled and started
-      service:
+      ansible.builtin.service:
         name: docker
         state: started
         enabled: true
@@ -69,12 +69,12 @@
     - docker_config
   block:
     - name: Add user to docker group
-      user:
+      ansible.builtin.user:
         name: "{{ docker_user }}"
         groups: docker
         append: true
 
     - name: Install Python Docker SDK package
-      apt:
+      ansible.builtin.apt:
         name: python3-docker
         state: present

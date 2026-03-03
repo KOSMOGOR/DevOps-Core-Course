@@ -10,13 +10,13 @@
     - compose
   block:
     - name: Create application directory
-      file:
+      ansible.builtin.file:
         path: "{{ web_app_dir }}"
         state: directory
         mode: "0755"
 
     - name: Template docker-compose file
-      template:
+      ansible.builtin.template:
         src: docker-compose.yml.j2
         dest: "{{ web_app_dir }}/docker-compose.yml"
         mode: "0644"
@@ -30,19 +30,19 @@
       register: web_app_compose_result
 
     - name: Wait for application port to be available
-      wait_for:
+      ansible.builtin.wait_for:
         port: "{{ web_app_port }}"
         delay: 5
         timeout: 60
         state: started
 
     - name: Verify health endpoint
-      uri:
+      ansible.builtin.uri:
         url: "http://localhost:{{ web_app_port }}{{ web_app_healthcheck_path }}"
         method: GET
         status_code: 200
         timeout: 10
-      register: health_check
+      register: web_app_health_check
       retries: 5
       delay: 5
       until: health_check.status == 200
