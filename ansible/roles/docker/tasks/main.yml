@@ -33,13 +33,13 @@
         filename: docker
         state: present
         update_cache: true
-      notify: restart docker
+      notify: Restart docker
 
     - name: Install Docker packages
       ansible.builtin.apt:
         name: "{{ docker_packages }}"
         state: present
-      notify: restart docker
+      notify: Restart docker
 
     - name: Ensure Docker service is enabled and running
       ansible.builtin.service:
