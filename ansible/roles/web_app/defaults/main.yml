@@ -1,0 +1,13 @@
+---
+web_app_dir: /app
+web_app_name: devops-app
+web_app_docker_image: your_dockerhub_username/devops-info-service
+web_app_docker_tag: latest
+web_app_port: 8000
+web_app_restart_policy: unless-stopped
+web_app_healthcheck_path: /health
+web_app_wipe: false
+
+web_app_environment:
+  APP_NAME: "{{ app_name }}"
+  PORT: "{{ app_port }}"
