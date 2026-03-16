@@ -38,7 +38,7 @@ I implemented logging by using custom JSON formatter, that is used in logging ha
 
 Dashboard has 4 panels.
 
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](./screenshots/lab07/dashboard.png)
 
 - Logs Table - shows recent logs from all apps
 - Request Rate - shows logs per second by app
@@ -62,11 +62,11 @@ docker compose ps
 # Loki ready
 curl http://localhost:3100/ready
 
-# Grafana healthy
-curl http://localhost:3000/api/health
-
 # Loki labels populated
 curl http://localhost:3100/loki/api/v1/labels
+
+# Grafana healthy
+curl http://localhost:3000/api/health
 
 # App is running
 curl http://localhost:8000/health
