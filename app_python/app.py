@@ -3,7 +3,7 @@ DevOps Info Service
 Main application module
 """
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
 import dotenv
 import platform
@@ -11,6 +11,7 @@ import os
 import socket
 from datetime import datetime, timezone
 import logging
+import json
 
 # Configuration
 dotenv.load_dotenv()
@@ -25,10 +26,27 @@ app = FastAPI()
 start_time = datetime.now()
 
 # Logging setup
-logging.basicConfig(
-    level=logging.INFO if not DEBUG else logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        log = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "message": record.getMessage(),
+            "level": record.levelname,
+            "logger": record.name
+        }
+        fields = ["method", "path", "status_code", "client_ip"]
+        for field in fields:
+            if hasattr(record, field):
+                value = getattr(record, field, None)
+                log[field] = value
+        return json.dumps(log)
+
+
+handler = logging.StreamHandler()
+handler.setFormatter(JSONFormatter())
+logging.root.handlers = [handler]
+logging.root.setLevel(logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 
@@ -46,9 +64,22 @@ def get_time_info():
 
 
 @app.middleware("http")
-def log_request_info(request: Request, call_next):
-    logger.debug(f'Request: {request.method} {request.url}')
-    return call_next(request)
+async def log_request_info(request: Request, call_next):
+    logger.info("Request", extra={
+        "method": request.method,
+        "path": request.url.path,
+        "client_ip": request.client.host,
+    })
+    response = await call_next(request)
+    status_code = response.status_code
+    level = logging.ERROR if status_code >= 500 else logging.WARNING if status_code >= 400 else logging.INFO
+    logger.log(level, "Response", extra={
+        "method": request.method,
+        "path": request.url.path,
+        "client_ip": request.client.host,
+        "status_code": status_code
+    })
+    return response
 
 
 @app.get("/")
@@ -119,5 +150,5 @@ def internal_server_error(request: Request, exception: Exception):
 
 
 if __name__ == "__main__":
-    logger.info("Application starting...")
+    logger.info(f"Application starting on http://{HOST}:{PORT}/")
     uvicorn.run("app:app", host=HOST, port=PORT, reload=DEBUG)
