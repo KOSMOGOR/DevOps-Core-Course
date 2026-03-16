@@ -11,7 +11,8 @@ import socket
 from datetime import datetime, timezone
 import logging
 import json
-from prometheus_client import CollectorRegistry, Counter, Histogram, Gauge, make_asgi_app
+from prometheus_client import CollectorRegistry, Counter, \
+    Histogram, Gauge, make_asgi_app
 
 # Configuration
 dotenv.load_dotenv()
@@ -49,6 +50,7 @@ system_info_duration = Histogram(
     'System info collection time',
     registry=registry
 )
+
 
 # Logging setup
 class JSONFormatter(logging.Formatter):
@@ -98,17 +100,20 @@ async def log_request_info(request: Request, call_next):
         "client_ip": request.client.host,
     })
     http_requests_in_progress.inc()
-    with http_request_duration_seconds.labels(method=method, endpoint=request.url.path).time():
+    with http_request_duration_seconds.labels(
+         method=method, endpoint=request.url.path).time():
         response = await call_next(request)
     status_code = response.status_code
-    level = logging.ERROR if status_code >= 500 else logging.WARNING if status_code >= 400 else logging.INFO
+    level = logging.ERROR if status_code >= 500 else\
+        logging.WARNING if status_code >= 400 else logging.INFO
     logger.log(level, "Response", extra={
         "method": request.method,
         "path": request.url.path,
         "client_ip": request.client.host,
         "status_code": status_code
     })
-    http_requests_total.labels(method=method, status=status_code, endpoint=endpoint).inc()
+    http_requests_total.labels(method=method, status=status_code,
+                               endpoint=endpoint).inc()
     http_requests_in_progress.dec()
     return response
 
@@ -142,8 +147,9 @@ def app_root(request: Request):
             },
             "endpoints": [
                 {"path": "/", "method": "GET",
-                "description": "Service information"},
-                {"path": "/health", "method": "GET", "description": "Health check"}
+                 "description": "Service information"},
+                {"path": "/health", "method": "GET",
+                 "description": "Health check"}
             ]
         }
     return info
