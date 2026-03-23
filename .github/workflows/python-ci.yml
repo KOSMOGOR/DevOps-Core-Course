@@ -6,6 +6,7 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/python-ci.yml'
       - app_python/
       - '!app_python/docs/**'
       - '!app_python/README.md'
