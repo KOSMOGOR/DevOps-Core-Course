@@ -1,4 +1,4 @@
-# Lab07
+# Lab 07
 
 ## 1. Architecture
 
