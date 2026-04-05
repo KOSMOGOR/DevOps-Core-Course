@@ -1,4 +1,4 @@
-# Lab09
+# Lab 09
 
 ## 1. Architecture Overview
 
@@ -15,15 +15,15 @@ Each container 100m CPU and 128Mi memory. These resources should be enough for t
 
 Deployment info:
 
-![DeploymentsInfo](./screenshots/kubectl_deployments_info.png)
+![DeploymentsInfo](./screenshots/lab09/kubectl_deployments_info.png)
 
 Deployment describe:
 
-![DeploymentsDescribe](./screenshots/kubectl_deployments_describe.png)
+![DeploymentsDescribe](./screenshots/lab09/kubectl_deployments_describe.png)
 
 Curl:
 
-![DeploymentsInfo](./screenshots/curl.png)
+![DeploymentsInfo](./screenshots/lab09/curl.png)
 
 ## 4. Operations Performed
 
