@@ -46,15 +46,15 @@ ingress:
 resources:
   requests:
     memory: "64Mi"
-    cpu: "50m"
+    cpu: "100m"
   limits:
     memory: "128Mi"
-    cpu: "100m"
+    cpu: "200m"
 
 livenessProbe:
   enabled: true
   path: /health
-  port: 5050
+  port: 8000
   initialDelaySeconds: 15
   periodSeconds: 10
   timeoutSeconds: 3
@@ -63,7 +63,7 @@ livenessProbe:
 readinessProbe:
   enabled: true
   path: /health
-  port: 5050
+  port: 8000
   initialDelaySeconds: 5
   periodSeconds: 5
   timeoutSeconds: 2
@@ -79,8 +79,21 @@ hooks:
     enabled: true
 
 env:
-  APP_NAME: "devops-info-helm"
   DEBUG: "false"
+
+secrets:
+  username: "dev-username"
+  password: "dev-password"
+
+vault:
+  enabled: true
+  role: "devops-info-vault"
+  secretPath: "secret/data/devops-info/config"
+  template: |
+    {{- with secret "secret/data/devops-info/config" -}}
+    username={{ .Data.data.username }}
+    password={{ .Data.data.password }}
+    {{- end -}}
 
 nodeSelector: {}
 

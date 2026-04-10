@@ -123,7 +123,7 @@ helm uninstall prod --keep-history
 1 chart(s) linted, 0 chart(s) failed
 ```
 
-`help template devops-info-chart` output:
+`helm template devops-info-chart` output:
 
 ```yaml
 ---
