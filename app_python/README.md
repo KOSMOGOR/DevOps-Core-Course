@@ -62,6 +62,7 @@ pytest /tests
 
 - `GET /` - Service and system information
 - `GET /health` - Health check
+- `GET /visits` - Root endpoint visits count
 
 ## Configuration
 
