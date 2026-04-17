@@ -78,8 +78,28 @@ hooks:
   notification:
     enabled: true
 
+config:
+  mountPath: /config
+  file:
+    appName: "devops-info"
+    environment: "development"
+    featureFlags:
+      visitsCounter: true
+      metrics: true
+  env:
+    data:
+      APP_NAME: "devops-info-service"
+      APP_ENV: "development"
+      LOG_LEVEL: "info"
+
 env:
   DEBUG: "false"
+
+persistence:
+  enabled: true
+  mountPath: /data
+  size: 100Mi
+  storageClass: ""
 
 secrets:
   username: "dev-username"

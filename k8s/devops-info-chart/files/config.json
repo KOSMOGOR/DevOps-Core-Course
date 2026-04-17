@@ -1,0 +1,14 @@
+{
+    "app": {
+        "name": {{ .Values.config.file.appName | quote }},
+        "environment": {{ .Values.config.file.environment | quote }},
+    },
+    "featureFlags": {
+        "visitsCounter": {{ .Values.config.file.featureFlags.visitsCounter }},
+        "metrics": {{ .Values.config.file.featureFlags.metrics }},
+    },
+    "settings": {
+        "visitsFile": {{ printf "%s/visits" .Values.persistence.mountPath | quote }},
+        "reloadStrategy": "checksum-rollout"
+    }
+}

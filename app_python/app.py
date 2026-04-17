@@ -2,6 +2,8 @@
 DevOps Info Service
 Main application module
 """
+from pathlib import Path
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import dotenv
@@ -13,12 +15,15 @@ import logging
 import json
 from prometheus_client import CollectorRegistry, Counter, \
     Histogram, Gauge, make_asgi_app
+from threading import Lock
 
 # Configuration
 dotenv.load_dotenv()
 HOST = os.getenv('HOST', '127.0.0.1')
 PORT = int(os.getenv('PORT', 8000))
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+VISITS_FILE_PATH = Path('/data/visits')
+VISITS_FILE_LOCK = Lock()
 
 # Application
 app = FastAPI()
@@ -90,6 +95,22 @@ def get_time_info():
     }
 
 
+def read_visit_count():
+    if not VISITS_FILE_PATH.exists():
+        VISITS_FILE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with VISITS_FILE_PATH.open('w') as f:
+            f.write('0')
+    with VISITS_FILE_PATH.open() as f:
+        return int(f.read())
+
+
+def increment_visits_count():
+    with Lock():
+        count = read_visit_count()
+        with VISITS_FILE_PATH.open('w') as f:
+            f.write(str(count + 1))
+
+
 @app.middleware("http")
 async def log_request_info(request: Request, call_next):
     endpoint = request.url.path
@@ -122,6 +143,7 @@ async def log_request_info(request: Request, call_next):
 def app_root(request: Request):
     """Main endpoint - service and system information"""
     with system_info_duration.time():
+        increment_visits_count()
         time_info = get_time_info()
         info = {
             "service": {
@@ -166,6 +188,14 @@ def app_health():
     }
 
 
+@app.get("/visits")
+def app_visits():
+    """Visits endpoint - displays root endpoint visits count"""
+    return {
+        'visits': read_visit_count()
+    }
+
+
 metrics_app = make_asgi_app(registry)
 app.mount("/metrics", metrics_app)
 
@@ -193,6 +223,7 @@ def internal_server_error(request: Request, exception: Exception):
 
 
 if __name__ == "__main__":
+    read_visit_count()
     import uvicorn
     logger.info(f"Application starting on http://{HOST}:{PORT}/")
     uvicorn.run("app:app", host=HOST, port=PORT, reload=DEBUG)

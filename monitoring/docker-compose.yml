@@ -131,6 +131,8 @@ services:
     container_name: app-python
     ports:
       - "8000:8000"
+    volumes:
+      - ./data/app-python:/data
     environment:
       - HOST=0.0.0.0
       - PORT=8000
