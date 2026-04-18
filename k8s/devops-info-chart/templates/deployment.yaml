@@ -52,9 +52,9 @@ spec:
           {{- end }}
           envFrom:
             - configMapRef:
-              name: {{ include "devops-info.fullname" . }}-env
+                name: {{ include "devops-info.fullname" . }}-env
             - secretRef:
-              name: {{ include "devops-info.fullname" . }}-secret
+                name: {{ include "devops-info.fullname" . }}-secret
           volumeMounts:
             - name: config-volume
               mountPath: {{ .Values.config.mountPath | quote }}
@@ -84,4 +84,4 @@ spec:
             name: {{ include "devops-info.fullname" . }}-config
         - name: data-volume
           persistentVolumeClaim:
-            name: {{ include "devops-info.fullname" . }}-pvc
+            claimName: {{ include "devops-info.fullname" . }}-pvc
