@@ -226,4 +226,4 @@ if __name__ == "__main__":
     read_visit_count()
     import uvicorn
     logger.info(f"Application starting on http://{HOST}:{PORT}/")
-    uvicorn.run("app:app", host=HOST, port=PORT, reload=DEBUG)
+    uvicorn.run("app:app", host=HOST, port=PORT, reload=False)
